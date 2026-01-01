@@ -4,6 +4,8 @@ import java.util.List;
 
 
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.example.demo.dto.TasksRequestDto;
 import com.example.demo.dto.TasksResponseDto;
@@ -35,11 +37,9 @@ public class TasksService {
             return tasksMapper.toResponseDto(savedTasks);
         }
         // get all tasks
-        public List<TasksResponseDto> getAllTasks(){
-            return tasksRepository.findAll()
-                    .stream()
-                    .map(tasksMapper::toResponseDto)
-                    .toList();
+        public Page <TasksResponseDto> getAllTasks(Pageable pageable){
+            return tasksRepository.findAll(pageable)
+                    .map(tasksMapper::toResponseDto);
         }
 
         // get all tasks by id 
